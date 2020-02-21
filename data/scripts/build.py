@@ -58,7 +58,41 @@ def find_and_save(dir, filename):
     sys.stdout.write('\n')
     output_file(filename, entries)
 
+
+def gen_custom_words():
+    path = './entries/custom-words.txt'
+    outputpath = './entries/custom-words.yaml'
+    if not os.path.exists(path):
+        return
+    words = []
+    with open(path, 'rt') as fp:
+        words = [line.strip() for line in fp.readlines()]
+
+    firstput = True
+    with open(outputpath, 'wt') as wp:
+        for word in words:
+            if not firstput:
+                wp.write('---\n')
+
+            buf = f'''000_KEYWORD: {word}__명사__001
+import:
+  seorenn:
+    구분: 단어
+    표제어: {word}
+    품사: 명사
+    라이선스: MPL 1.1/GPL 2.0/LGPL 2.1
+result:
+  맞춤법 검사:
+    표제어: {word}
+    품사: 명사'''
+            wp.write(buf)
+            wp.write('\n')
+            
+            firstput = False
+
+
 if __name__ == '__main__':
     dir = './entries'
     outfile = '../dict-ko-data.yaml'
+    gen_custom_words()
     find_and_save(dir, outfile)

@@ -3,3 +3,6 @@
 dist
 ko.aff
 ko.dic
+custom-words.txt
+custom-words.yaml
+dict-ko-data.yaml
